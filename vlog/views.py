@@ -25,33 +25,46 @@ def contact(req):
 
 
 def Signup(req):
-    if req.method == 'POST':
-        sf = SignUpform(req.POST)
-        if sf.is_valid():
-            sf.save()
-            messages.success(req,'Account Create Successfully.')
+    if req.user.is_authenticated == False: 
+        if req.method == 'POST':
+            sf = SignUpform(req.POST)
+            if sf.is_valid():
+                sf.save()
+                messages.success(req,'Account Create Successfully.')
+                sf = SignUpform()
+        else:
             sf = SignUpform()
+        return render(req,'vlog/signup.htm',{"active":"signup","sf":sf})
     else:
-        sf = SignUpform()
-    return render(req,'vlog/signup.htm',{"active":"signup","sf":sf})
-
+        return HttpResponseRedirect('/Dashboard')
 
 def Login(req):
-    if req.method == "POST":
-        lf = LoginFrm(request = req,data=req.POST)
-        if lf.is_valid():
-            uname = lf.cleaned_data['username']
-            passr = lf.cleaned_data['password']
-            logdata = authenticate(username = uname , password = passr)
-            if logdata:
-                login(req,logdata)
-                messages.success(req,'Thank You For Login')
-                return HttpResponseRedirect('/Dashboard')
+    if req.user.is_authenticated == False: 
+        if req.method == "POST":
+            lf = LoginFrm(request = req,data=req.POST)
+            if lf.is_valid():
+                uname = lf.cleaned_data['username']
+                passr = lf.cleaned_data['password']
+                logdata = authenticate(username = uname , password = passr)
+                if logdata:
+                    login(req,logdata)
+                    messages.success(req,'Thank You For Login')
+                    return HttpResponseRedirect('/Dashboard')
+        else:
+            lf = LoginFrm()
+        return render(req,'vlog/login.htm',{"active":"login","lf":lf})
     else:
-        lf = LoginFrm()
-    return render(req,'vlog/login.htm',{"active":"login","lf":lf})
+        return HttpResponseRedirect('/Dashboard')
 
 def Profile(req):
-    return render(req,'vlog/dashboard.htm')
+    if req.user.is_authenticated: 
+        return render(req,'vlog/dashboard.htm',{"active":"profile"})
+    else:
+        return HttpResponseRedirect('/Signin')
+
+
+def Logout(req):
+    logout(req)
+    return HttpResponseRedirect('/Signin')
 
 
