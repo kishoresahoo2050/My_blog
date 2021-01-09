@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <title>{% block title %}{% endblock title %}</title>
+    <style>
+        .jumbtron-color {
+            background-color: rgb(246, 251, 255);
+        }
+    </style>
+</head>
+<body>
+    {% include 'vlog/nav.htm' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                {% block body %}{% endblock body %}
+            </div>
+        </div>
+        <div class="row">
+            {% block side %}{% endblock side %}
+            
+            {% block content %}{% endblock content %}
+        </div>
+   
+    </div>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+</body>
+</html>
