@@ -1,0 +1,42 @@
+{% extends 'vlog/base.htm' %}
+{% block title %} Add Post {% endblock title %}
+
+{% block content %}
+<div class="col-sm-12">
+    <h3 class="my-5">Add Post</h3>
+     <div class="col-sm-10">
+         <form action="" method="post" novalidate>
+             {% if messages %}
+                {% for msg in messages %}
+                <div class="alert alert-{{msg.tags}}">{{msg}}</div>
+                {% endfor %}
+             {% endif %}
+             {% csrf_token %}
+             <div class="form-row">
+                 {% for form in pf %}
+                    {% if form.field.widget.input_type == 'text' %}
+                    <div class="form-group col-sm-6">
+                        {{form.label_tag}}
+                        {{form}}
+                        {% if form.errors %}
+                            <span class="text-danger">{{form.errors|striptags}}</span>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <div class="form-group col-sm-12">
+                        {{form.label_tag}}
+                        {{form}}
+                        {% if form.errors %}
+                            <span class="text-danger">{{form.errors|striptags}}</span>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                 {% endfor %}
+             </div>
+             <button class="btn btn-primary">Add</button>
+             <a href="{% url 'profile'%}" class="btn btn-danger">Cancel</a>
+         </form>
+     </div>
+
+</div>
+{% endblock content %}

@@ -1,4 +1,4 @@
-from .models import Contact
+from .models import Contact,Post
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User
 from django import forms
@@ -77,6 +77,25 @@ class LoginFrm(AuthenticationForm):
             "placeholder":"Enter  Password"
         }),error_messages={"required":"Password Must Be Required"})
         
-        
+
+
+       
+class PostForm(forms.ModelForm):
+    title = forms.CharField(label_suffix="",error_messages = {"required":"Title Must Required"},widget=forms.TextInput(attrs={
+            "class":"form-control",
+            "placeholder":"Enter Title"
+        }))
+    auth = forms.CharField(label_suffix="",error_messages = {"required":"Auth Must Required"},widget=forms.TextInput(attrs={
+            "class":"form-control",
+            "placeholder":"Enter Auth"
+        }))
+    desc = forms.CharField(label_suffix="",error_messages = {"required":"Description Must Required"},widget=forms.Textarea(attrs={
+            "class":"form-control",
+            "placeholder":"Enter Description"
+        }))
+    class Meta:
+        model = Post
+        fields = ['title','auth','desc']
+
         
     

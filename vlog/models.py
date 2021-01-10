@@ -9,5 +9,10 @@ class Contact(models.Model):
     message = models.CharField(max_length=500)
 
 
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    auth  = models.CharField(max_length=55)
+    desc  = models.TextField()
+
 
     

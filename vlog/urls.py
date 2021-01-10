@@ -7,6 +7,9 @@ urlpatterns = [
      path('Signup',views.Signup,name="Signup"),
      path('Signin',views.Login,name="login"),
      path('Dashboard',views.Profile,name="profile"),
-     path('Logout',views.Logout,name="logout")
+     path('Logout',views.Logout,name="logout"),
+     path("DelRec",views.DelRecor,name="DelRec"),
+     path("Addpost",views.AddPost,name="addpost"),
+     path("Edit/<int:editid>",views.Edit,name="editpost"),
 
 ]

@@ -1,2 +1,63 @@
 {% extends 'vlog/base.htm' %}
 {% block title %} Dashboard {% endblock title %}
+
+{% block content %}
+<div class="col-sm-12">
+    <h3 class="my-5">Dashboard</h3>
+     <div class="col-sm-12">
+         <a href="{% url 'addpost'%}" class="btn btn-primary mb-3">Add Post</a>
+        <table class="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Auth</th>
+                <th scope="col">Desc</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% if messages %}
+                {% for msg in messages %}
+                <div class="alert alert-{{msg.tags}}">{{msg}}</div>
+                {% endfor %}
+                {% endif %}
+                {% if All_post %}
+                {% for post in All_post %}
+              <tr>
+                <td scope="row">{{ forloop.counter }}</td>
+                <td>{{post.title}}</td>
+                <td>{{post.auth}}</td>
+                <td>{{post.desc|truncatechars:80}}</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="{% url 'editpost' post.id %}">Edit</a>
+                    <button class="btn btn-danger btn-sm" onclick="DelteRec('{{post.id}}')">Delete</button>
+                    
+                </td>
+              </tr>
+              {% endfor %}
+              {% else %}
+              <tr>
+                  <td colspan="5">No Data Found..</td>
+              </tr>
+              {% endif %}
+              
+            </tbody>
+          </table>
+     </div>
+
+</div>
+<script>
+    function DelteRec(id){
+        var conf = confirm("Are you sure delete this record ? ")
+        if(conf){
+            $('#Delid').val(id);
+            $('#FrmDel').submit();
+        }
+    }
+</script>
+<form action="{% url 'DelRec' %}" method="post" id="FrmDel">
+    {% csrf_token %}
+    <input type="hidden" name="id" id="Delid" >
+</form>
+{% endblock content %}
