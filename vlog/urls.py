@@ -12,5 +12,6 @@ urlpatterns = [
      path("Addpost",views.AddPost,name="addpost"),
      path("Edit/<int:editid>",views.Edit,name="editpost"),
      path("ChangePassword",views.ChangePass,name="ChnPwd"),
+     path("Profile",views.ChangeProfile,name="CProfile"),
 
 ]

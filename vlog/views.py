@@ -1,5 +1,5 @@
 from django.shortcuts import render,HttpResponseRedirect
-from .forms import ContactFrm,SignUpform,LoginFrm,PostForm,ChangePwd
+from .forms import ContactFrm,SignUpform,LoginFrm,PostForm,ChangePwd,UpdateProfile
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate,login,logout
@@ -120,15 +120,30 @@ def Edit(req,editid):
 
 
 def ChangePass(req):
-    if req.method == "POST":
-        cp = ChangePwd(user = req.user,data = req.POST)
-        # print('run')
-        if cp.is_valid():
-            cp.save()
-            messages.success(req,"Password Reset Successfully.")
+    if req.user.is_authenticated:
+        if req.method == "POST":
+            cp = ChangePwd(user = req.user,data = req.POST)
+            # print('run')
+            if cp.is_valid():
+                cp.save()
+                messages.success(req,"Password Reset Successfully.")
+        else:
+            cp = ChangePwd(user = req)
+        return render(req,'vlog/change_pass.htm',{'active':'profile',"cp":cp})
     else:
-        cp = ChangePwd(user = req)
-    return render(req,'vlog/change_pass.htm',{'active':'profile',"cp":cp})
+        return('/Sinin')
+
+
+def ChangeProfile(req):
+    if req.user.is_authenticated:
+        if req.method == 'POST':
+            pro_up = UpdateProfile(req.POST,instance = req.user)
+            if pro_up.is_valid():
+                pro_up.save()
+                messages.success(req,'Profile Updated Successfully.')
+        else:   
+            pro_up = UpdateProfile(instance = req.user)
+        return render(req,'vlog/profile.htm',{'active':'profile',"pro_up":pro_up})
 
 
 

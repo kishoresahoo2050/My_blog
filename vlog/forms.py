@@ -1,5 +1,5 @@
 from .models import Contact,Post
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,PasswordChangeForm,UserChangeForm
 from django.contrib.auth.models import User
 from django import forms
 class ContactFrm(forms.ModelForm):
@@ -112,5 +112,31 @@ class ChangePwd(PasswordChangeForm):
         'placeholder':'Enter Confirm Password'
     }))
 
+
+class UpdateProfile(UserChangeForm):
+    password = None
+    username = forms.CharField(label_suffix="",error_messages={'required':' Username Must Be Required'},
+    widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Enter User Name'
+        }))
+    first_name = forms.CharField(label_suffix="",error_messages={'required':' First Name Must Be Required'},
+    widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Enter First Name'
+        }))
+    last_name = forms.CharField(label_suffix="",error_messages={'required':' Last Name Must Be Required'},
+    widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Enter Last Name'
+        }))
+    email = forms.CharField(label_suffix="",error_messages={'required':' Email Must Be Required'},
+    widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Enter Email'
+        }))
+    class Meta:
+        model = User
+        fields = ['first_name','last_name','username','email']
         
     
