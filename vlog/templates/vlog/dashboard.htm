@@ -17,6 +17,7 @@
               </tr>
             </thead>
             <tbody>
+               
                 {% if messages %}
                 {% for msg in messages %}
                 <div class="alert alert-{{msg.tags}}">{{msg}}</div>
@@ -31,8 +32,9 @@
                 <td>{{post.desc|truncatechars:80}}</td>
                 <td>
                     <a class="btn btn-primary btn-sm" href="{% url 'editpost' post.id %}">Edit</a>
+                    {% if request.user.is_superuser %}
                     <button class="btn btn-danger btn-sm" onclick="DelteRec('{{post.id}}')">Delete</button>
-                    
+                    {% endif %}
                 </td>
               </tr>
               {% endfor %}
