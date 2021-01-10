@@ -1,5 +1,5 @@
 from .models import Contact,Post
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,PasswordChangeForm
 from django.contrib.auth.models import User
 from django import forms
 class ContactFrm(forms.ModelForm):
@@ -96,6 +96,21 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title','auth','desc']
+
+
+class ChangePwd(PasswordChangeForm):
+    old_password = forms.CharField(label="Password ",label_suffix="",error_messages = {"required":"Password Must Be Required"},widget=forms.PasswordInput(attrs={
+        'class':'form-control',
+        'placeholder':'Enter  Password'
+    }))
+    new_password1 = forms.CharField(label="New Password ",label_suffix="",error_messages = {"required":"New Password Must Be Required"},widget=forms.PasswordInput(attrs={
+        'class':'form-control',
+        'placeholder':'Enter New Password'
+    }))
+    new_password2 = forms.CharField(label="Confirm Password ",label_suffix="",error_messages = {"required":"Confirm Password Must Be Required"},widget=forms.PasswordInput(attrs={
+        'class':'form-control',
+        'placeholder':'Enter Confirm Password'
+    }))
 
         
     

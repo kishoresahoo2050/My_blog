@@ -11,5 +11,6 @@ urlpatterns = [
      path("DelRec",views.DelRecor,name="DelRec"),
      path("Addpost",views.AddPost,name="addpost"),
      path("Edit/<int:editid>",views.Edit,name="editpost"),
+     path("ChangePassword",views.ChangePass,name="ChnPwd"),
 
 ]

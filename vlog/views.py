@@ -1,5 +1,5 @@
 from django.shortcuts import render,HttpResponseRedirect
-from .forms import ContactFrm,SignUpform,LoginFrm,PostForm
+from .forms import ContactFrm,SignUpform,LoginFrm,PostForm,ChangePwd
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate,login,logout
@@ -116,6 +116,22 @@ def Edit(req,editid):
         return render(req,'vlog/edit_post.htm',{'active':'profile','ep':ep})
     else:
         return HttpResponseRedirect('/Signin')
+
+
+
+def ChangePass(req):
+    if req.method == "POST":
+        cp = ChangePwd(user = req.user,data = req.POST)
+        # print('run')
+        if cp.is_valid():
+            cp.save()
+            messages.success(req,"Password Reset Successfully.")
+    else:
+        cp = ChangePwd(user = req)
+    return render(req,'vlog/change_pass.htm',{'active':'profile',"cp":cp})
+
+
+
 
 
 
